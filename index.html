@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcRise — Rise Through Your Arcs</title>
+    <meta name="description" content="Turn habits into a hero's journey. Build discipline, earn EXP, ascend tiers, and become the person you were meant to be.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="ArcRise — Rise Through Your Arcs">
+    <meta property="og:description" content="Turn habits into a hero's journey. Build discipline, earn EXP, ascend tiers, and become the person you were meant to be.">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="ArcRise — Rise Through Your Arcs">
+    <meta property="twitter:description" content="Turn habits into a hero's journey. Build discipline, earn EXP, ascend tiers, and become the person you were meant to be.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><defs><linearGradient id=%22g%22 x1=%220%25%22 y1=%220%25%22 x2=%22100%25%22 y2=%22100%25%22><stop offset=%220%25%22 stop-color=%22%23F4C76A%22/><stop offset=%22100%25%22 stop-color=%22%23E88C4A%22/></linearGradient></defs><text y=%22.9em%22 font-size=%2280%22>⚡</text></svg>">
+
+    <style>
+        :root {
+            --bg: #080A12;
+            --surface: #111522;
+            --surface-2: #161B2E;
+            --gold: #D6A84F;
+            --gold-bright: #F4C76A;
+            --dawn: #E88C4A;
+            --blue: #8FB7FF;
+            --mint: #5ECBA1;
+            --text: #F6F2E8;
+            --text-2: #A8ADBD;
+            --text-3: #5A607A;
+            --border: rgba(214, 168, 79, 0.15);
+            --border-dim: rgba(255,255,255,0.06);
+            --font: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Helvetica, Arial, sans-serif;
+            --radius-xl: 28px;
+            --radius-lg: 20px;
+            --radius-md: 14px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto !important; }
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: var(--font);
+            line-height: 1.65;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { color: var(--gold); text-decoration: none; transition: color 0.25s; }
+        a:hover { color: var(--gold-bright); }
+
+        .container { max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* ─── NAV ─────────────────────────────────────────────── */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 200;
+            padding: 1rem 0;
+            background: rgba(8, 10, 18, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-dim);
+        }
+
+        .nav-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex; align-items: center; gap: 0.55rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            background: linear-gradient(120deg, var(--text) 30%, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .logo-icon {
+            width: 30px; height: 30px;
+            border-radius: 7px;
+            flex-shrink: 0;
+            /* Prevent icon inheriting the gradient clip */
+            -webkit-text-fill-color: initial;
+            background: none;
+        }
+
+        .logo span { opacity: 0.6; font-weight: 400; }
+
+        nav a {
+            color: var(--text-2);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-left: 2rem;
+            transition: color 0.2s;
+        }
+        nav a:hover { color: var(--text); }
+        nav a.nav-active {
+            color: var(--gold-bright);
+            position: relative;
+        }
+        nav a.nav-active::after {
+            content: '';
+            position: absolute;
+            bottom: -6px; left: 50%;
+            transform: translateX(-50%);
+            width: 4px; height: 4px;
+            border-radius: 50%;
+            background: var(--gold);
+            opacity: 0.8;
+        }
+
+        .nav-cta {
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            background: rgba(214,168,79,0.12);
+            border: 1px solid rgba(214,168,79,0.3);
+            border-radius: 30px;
+            color: var(--gold) !important;
+            font-size: 0.85rem !important;
+            font-weight: 600 !important;
+            margin-left: 2rem;
+            transition: all 0.25s !important;
+        }
+        .nav-cta:hover {
+            background: rgba(214,168,79,0.2) !important;
+            color: var(--gold-bright) !important;
+        }
+
+        /* ─── BUTTONS ─────────────────────────────────────────── */
+        .btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.9rem 2rem; border-radius: 50px;
+            font-size: 1rem; font-weight: 600;
+            transition: all 0.3s; cursor: pointer; border: none;
+        }
+
+        .btn-gold {
+            background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 50%, var(--dawn) 100%);
+            color: #0a0800;
+            box-shadow: 0 4px 20px rgba(214,168,79,0.35), 0 1px 0 rgba(255,255,255,0.2) inset;
+        }
+        .btn-gold:hover {
+            color: #0a0800;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(214,168,79,0.5);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-2);
+            border: 1px solid var(--border-dim);
+        }
+        .btn-ghost:hover {
+            color: var(--text);
+            border-color: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* ─── HERO ────────────────────────────────────────────── */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center;
+            padding: 10rem 0 6rem;
+            position: relative; overflow: hidden;
+        }
+
+        /* Radial background glow */
+        .hero::before {
+            content: '';
+            position: absolute; inset: 0; z-index: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 65% 50%, rgba(214,168,79,0.08) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(143,183,255,0.06) 0%, transparent 60%);
+        }
+
+        /* Decorative arc rings */
+        .arc-rings {
+            position: absolute; inset: 0; z-index: 0;
+            pointer-events: none; overflow: hidden;
+        }
+        .arc-rings svg {
+            position: absolute;
+            top: 50%; left: 65%;
+            transform: translate(-50%, -50%);
+            width: 900px; height: 900px;
+            opacity: 0.06;
+            animation: rings-rotate 60s linear infinite;
+        }
+        @keyframes rings-rotate {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to   { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Ripple-from-center on page load */
+        .arc-rings svg circle {
+            transform-box: fill-box;
+            transform-origin: center;
+            opacity: 0;
+        }
+        .arc-rings svg circle:nth-of-type(1) { animation: ring-wave 1s cubic-bezier(0.16,1,0.3,1) 0.15s forwards; }
+        .arc-rings svg circle:nth-of-type(2) { animation: ring-wave 1s cubic-bezier(0.16,1,0.3,1) 0.32s forwards; }
+        .arc-rings svg circle:nth-of-type(3) { animation: ring-wave 1s cubic-bezier(0.16,1,0.3,1) 0.50s forwards; }
+        .arc-rings svg circle:nth-of-type(4) { animation: ring-wave 1s cubic-bezier(0.16,1,0.3,1) 0.68s forwards; }
+        .arc-rings svg circle:nth-of-type(5) { animation: ring-wave 1s cubic-bezier(0.16,1,0.3,1) 0.86s forwards; }
+        @keyframes ring-wave {
+            from { opacity: 0; transform: scale(0.2); }
+            to   { opacity: 1; transform: scale(1); }
+        }
+
+        .hero-inner {
+            position: relative; z-index: 1;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .hero-text {
+            opacity: 0; transform: translateY(24px);
+            animation: fade-up 1s cubic-bezier(0.2,0.8,0.2,1) 0.1s forwards;
+        }
+
+        .hero-app-icon {
+            width: 76px; height: 76px;
+            border-radius: 18px;
+            margin-bottom: 1.75rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08);
+            display: block;
+        }
+
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-size: 0.8rem; font-weight: 600; letter-spacing: 1.5px;
+            text-transform: uppercase; color: var(--gold);
+            margin-bottom: 1.5rem;
+            padding: 0.4rem 1rem;
+            background: rgba(214,168,79,0.08);
+            border: 1px solid rgba(214,168,79,0.2);
+            border-radius: 30px;
+        }
+        .hero-eyebrow::before {
+            content: '';
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--gold);
+            animation: pulse-dot 2s infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
+        }
+
+        .hero h1 {
+            font-size: clamp(2.8rem, 5vw, 4.5rem);
+            font-weight: 800;
+            line-height: 1.08;
+            letter-spacing: -1.5px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(160deg, var(--text) 40%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-2);
+            max-width: 480px;
+            margin-bottom: 2.5rem;
+            line-height: 1.7;
+        }
+
+        .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        .appstore-btn {
+            display: inline-flex; align-items: center; gap: 0.75rem;
+            padding: 0.85rem 1.75rem;
+            background: var(--text);
+            color: var(--bg);
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(246,242,232,0.15);
+        }
+        .appstore-btn:hover { color: var(--bg); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(246,242,232,0.25); }
+        .appstore-btn svg { width: 22px; height: 22px; flex-shrink: 0; }
+        .appstore-btn-label { display: flex; flex-direction: column; text-align: left; }
+        .appstore-btn-label small { font-size: 0.65rem; font-weight: 500; opacity: 0.6; letter-spacing: 0.5px; }
+        .appstore-btn-label strong { font-size: 1rem; font-weight: 700; }
+
+        /* ─── IPHONE MOCKUP ───────────────────────────────────── */
+        .hero-phone {
+            opacity: 0; transform: translateX(30px);
+            animation: fade-left 1.2s cubic-bezier(0.2,0.8,0.2,1) 0.4s forwards;
+        }
+        @keyframes fade-left { to { opacity: 1; transform: translateX(0); } }
+
+        .phone-glow {
+            position: absolute;
+            inset: -40px;
+            background: radial-gradient(ellipse at center, rgba(214,168,79,0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(30px);
+            z-index: -1;
+            animation: glow-pulse 4s ease-in-out infinite alternate;
+        }
+        @keyframes glow-pulse {
+            from { opacity: 0.6; transform: scale(0.95); }
+            to   { opacity: 1;   transform: scale(1.05); }
+        }
+
+        .phone-wrap {
+            position: relative;
+            animation: float 6s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+        }
+        @keyframes float {
+            from { transform: translateY(0); }
+            to   { transform: translateY(-20px); }
+        }
+
+        /* The iPhone frame */
+        .iphone {
+            position: relative;
+            width: 268px;
+            height: 556px;
+            border-radius: 48px;
+            background: linear-gradient(160deg, #2e2e32 0%, #1a1a1e 45%, #242428 100%);
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.14),
+                0 0 0 2px rgba(0,0,0,0.7),
+                0 0 0 3px rgba(255,255,255,0.04),
+                inset 0 1px 0 rgba(255,255,255,0.1),
+                0 60px 120px rgba(0,0,0,0.8),
+                0 20px 40px rgba(0,0,0,0.4);
+            padding: 12px;
+        }
+
+        /* Dynamic Island */
+        .iphone::before {
+            content: '';
+            position: absolute;
+            top: 20px; left: 50%;
+            transform: translateX(-50%);
+            width: 110px; height: 32px;
+            background: #000;
+            border-radius: 18px;
+            z-index: 10;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        /* Power button */
+        .iphone::after {
+            content: '';
+            position: absolute;
+            right: -5px; top: 126px;
+            width: 4px; height: 68px;
+            background: linear-gradient(to bottom, #2a2a2e 0%, #333338 50%, #2a2a2e 100%);
+            border-radius: 0 3px 3px 0;
+            box-shadow: 1px 0 0 rgba(255,255,255,0.06);
+        }
+
+        /* Volume buttons */
+        .iphone-vol {
+            position: absolute;
+            left: -5px; top: 108px;
+            width: 4px; height: 42px;
+            background: linear-gradient(to bottom, #2a2a2e, #333338 50%, #2a2a2e);
+            border-radius: 3px 0 0 3px;
+            box-shadow: -1px 0 0 rgba(255,255,255,0.06);
+        }
+        .iphone-vol::before, .iphone-vol::after {
+            content: '';
+            position: absolute;
+            left: 0; width: 4px; height: 42px;
+            background: inherit; border-radius: 3px 0 0 3px;
+        }
+        .iphone-vol::before { top: 56px; }
+        .iphone-vol::after  { top: -58px; height: 30px; }
+
+        .iphone-screen {
+            width: 100%; height: 100%;
+            border-radius: 38px;
+            overflow: hidden;
+            background: #000;
+            position: relative;
+        }
+
+        .iphone-screenshot {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            transition: opacity 0.5s ease;
+        }
+
+        /* ─── SCREENSHOT GALLERY ─────────────────────────────── */
+        .gallery {
+            padding: 5rem 0 7rem;
+            overflow: hidden;
+        }
+
+        .gallery-track-wrap {
+            overflow: visible;
+            margin: 3rem 0 0;
+            padding: 0;
+        }
+
+        .gallery-track {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 0.5rem 0;
+        }
+
+        @media (max-width: 860px) {
+            .gallery-track-wrap {
+                overflow: hidden;
+                margin: 3rem -1.5rem 0;
+                padding: 0 1.5rem 1rem;
+            }
+            .gallery-track {
+                flex-wrap: nowrap;
+                justify-content: flex-start;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .gallery-track::-webkit-scrollbar { display: none; }
+        }
+
+        .gallery-item {
+            flex-shrink: 0;
+            scroll-snap-align: start;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s, transform 0.6s;
+        }
+        .gallery-item.active { opacity: 1; transform: translateY(0); }
+
+        /* Mini iPhone frames for gallery */
+        .mini-phone {
+            position: relative;
+            width: 180px;
+            height: 372px;
+            border-radius: 34px;
+            background: linear-gradient(160deg, #2a2a2e 0%, #1a1a1e 50%, #242428 100%);
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.12),
+                0 0 0 2px rgba(0,0,0,0.6),
+                0 30px 60px rgba(0,0,0,0.6);
+            padding: 8px;
+        }
+        .mini-phone::before {
+            content: '';
+            position: absolute;
+            top: 14px; left: 50%;
+            transform: translateX(-50%);
+            width: 72px; height: 22px;
+            background: #000;
+            border-radius: 12px;
+            z-index: 10;
+        }
+        .mini-phone-screen {
+            width: 100%; height: 100%;
+            border-radius: 27px;
+            overflow: hidden;
+            background: #000;
+        }
+        .mini-phone-screen img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: top;
+            display: block;
+        }
+
+        .gallery-label {
+            text-align: center;
+            margin-top: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-3);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ─── SECTION COMMONS ─────────────────────────────────── */
+        section { padding: 7rem 0; position: relative; }
+        section.progression { padding: 5rem 0 6rem; }
+
+        .section-label {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1rem;
+        }
+
+        .section-header {
+            max-width: 640px;
+            margin: 0 auto 4rem;
+            text-align: center;
+        }
+        .section-header h2 {
+            font-size: clamp(2rem, 3.5vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--text) 50%, var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-2);
+            line-height: 1.7;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px) scale(0.985);
+            transition:
+                opacity 0.72s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.72s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
+        }
+        .reveal.active { opacity: 1; transform: translateY(0) scale(1); }
+
+        /* ─── PHILOSOPHY CARDS ────────────────────────────────── */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border-dim);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem 2rem;
+            position: relative; overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+        }
+        .card::after {
+            content: '';
+            position: absolute; inset: 0; border-radius: inherit;
+            background: radial-gradient(circle at 50% 0%, rgba(214,168,79,0.07) 0%, transparent 65%);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .card:hover { transform: translateY(-10px) scale(1.015); box-shadow: 0 32px 64px rgba(0,0,0,0.45); border-color: var(--border); }
+        .card:hover::after { opacity: 1; }
+
+        .card-icon-wrap {
+            width: 52px; height: 52px;
+            border-radius: 14px;
+            background: rgba(214,168,79,0.1);
+            border: 1px solid rgba(214,168,79,0.2);
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        .card-icon-wrap svg {
+            width: 26px; height: 26px;
+            color: var(--gold);
+            flex-shrink: 0;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+        .card p { color: var(--text-2); font-size: 0.95rem; line-height: 1.6; }
+
+        /* ─── FEATURES ────────────────────────────────────────── */
+        .features-bg {
+            background: linear-gradient(180deg, transparent, rgba(17,21,34,0.5) 50%, transparent);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem 3rem;
+        }
+
+        .feature-item { display: flex; gap: 1rem; align-items: flex-start; }
+
+        .feature-dot {
+            flex-shrink: 0;
+            margin-top: 7px;
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 8px rgba(214,168,79,0.5);
+        }
+
+        .feature-item h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 0.35rem;
+        }
+        .feature-item p {
+            color: var(--text-2);
+            font-size: 0.9rem;
+            line-height: 1.55;
+        }
+
+        /* ─── TIER PROGRESSION ────────────────────────────────── */
+        .progression { text-align: center; }
+
+        .tier-path {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+            max-width: 860px; margin: 0 auto; padding-top: 2rem;
+            gap: 0;
+        }
+
+        /* Connecting gradient line */
+        .tier-path::before {
+            content: '';
+            position: absolute;
+            top: 56px; left: 10%; right: 10%;
+            height: 2px;
+            background: linear-gradient(90deg,
+                rgba(255,255,255,0.04) 0%,
+                rgba(214,168,79,0.3) 25%,
+                rgba(244,199,106,0.6) 50%,
+                rgba(214,168,79,0.3) 75%,
+                rgba(255,255,255,0.04) 100%
+            );
+        }
+
+        .tier-node {
+            flex: 1;
+            display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+            cursor: default;
+        }
+
+        /* Per-tier authentic colors from DesignSystem.swift */
+        .tier-node[data-tier="0"] { --tc: #B8AE97; --tc-glow: rgba(184,174,151,0.35); --tc-bg: rgba(184,174,151,0.1); }
+        .tier-node[data-tier="1"] { --tc: #B87749; --tc-glow: rgba(184,119,73,0.35); --tc-bg: rgba(184,119,73,0.1); }
+        .tier-node[data-tier="2"] { --tc: #8C99A8; --tc-glow: rgba(140,153,168,0.35); --tc-bg: rgba(140,153,168,0.1); }
+        .tier-node[data-tier="3"] { --tc: #D6A329; --tc-glow: rgba(214,163,41,0.35); --tc-bg: rgba(214,163,41,0.1); }
+        .tier-node[data-tier="4"] { --tc: #A080F8; --tc-glow: rgba(160,128,248,0.4); --tc-bg: rgba(160,128,248,0.1); }
+
+        .tier-orb {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--border-dim);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; z-index: 2;
+            transition: all 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+        .tier-orb svg {
+            width: 32px; height: 32px;
+            color: var(--text-3);
+            flex-shrink: 0;
+            transition: color 0.55s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .tier-node.lit .tier-orb {
+            border-color: var(--tc);
+            background: radial-gradient(circle at 40% 35%, var(--tc-bg), var(--surface));
+            box-shadow: 0 0 0 6px var(--tc-bg), 0 0 28px var(--tc-glow), inset 0 1px 0 rgba(255,255,255,0.12);
+            transform: scale(1.12);
+        }
+        .tier-node.lit .tier-orb svg {
+            color: var(--tc);
+            transform: scale(1.06);
+        }
+
+        .tier-name {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-3);
+            transition: color 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .tier-node.lit .tier-name { color: var(--tc); }
+
+        .tier-exp {
+            font-size: 0.7rem;
+            color: var(--text-3);
+            transition: color 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .tier-node.lit .tier-exp { color: var(--text-2); }
+
+        /* ─── PRIVACY + PRICING ──────────────────────────────── */
+        .value-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .value-card {
+            background: var(--surface);
+            border: 1px solid var(--border-dim);
+            border-radius: var(--radius-xl);
+            padding: 3rem 2.5rem;
+            position: relative; overflow: hidden;
+        }
+
+        .value-card.privacy {
+            background: linear-gradient(140deg, rgba(143,183,255,0.05) 0%, var(--surface) 55%);
+            border-color: rgba(143,183,255,0.14);
+        }
+
+        .value-card.pro {
+            background: linear-gradient(140deg, rgba(214,168,79,0.07) 0%, var(--surface) 55%);
+            border-color: rgba(214,168,79,0.18);
+        }
+
+        .value-eyebrow {
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .value-card.privacy .value-eyebrow { color: var(--blue); }
+        .value-card.pro .value-eyebrow { color: var(--gold); }
+
+        .value-card h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            letter-spacing: -0.4px;
+            line-height: 1.2;
+            margin-bottom: 0.85rem;
+        }
+
+        .value-card > p {
+            color: var(--text-2);
+            font-size: 0.98rem;
+            line-height: 1.65;
+            margin-bottom: 2rem;
+        }
+
+        .privacy-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .privacy-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.9rem;
+        }
+
+        .privacy-icon {
+            flex-shrink: 0;
+            width: 34px; height: 34px;
+            border-radius: 9px;
+            background: rgba(143,183,255,0.1);
+            border: 1px solid rgba(143,183,255,0.18);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--blue);
+        }
+        .privacy-icon svg { width: 16px; height: 16px; }
+
+        .privacy-row-text strong {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+            color: var(--text);
+        }
+        .privacy-row-text span {
+            font-size: 0.82rem;
+            color: var(--text-2);
+            line-height: 1.5;
+        }
+
+        .pro-list {
+            list-style: none;
+            display: flex; flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 2rem;
+        }
+
+        .pro-list li {
+            display: flex; align-items: center; gap: 0.7rem;
+            font-size: 0.95rem; color: var(--text-2);
+        }
+
+        .pro-list li::before {
+            content: '';
+            flex-shrink: 0;
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: var(--gold);
+            box-shadow: 0 0 6px rgba(214,168,79,0.6);
+        }
+
+        .price-pill {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.65rem 1.25rem;
+            background: rgba(214,168,79,0.09);
+            border: 1px solid rgba(214,168,79,0.22);
+            border-radius: 10px;
+        }
+
+        .price-pill strong { font-size: 1rem; color: var(--gold); font-weight: 700; }
+        .price-pill span { font-size: 0.82rem; color: var(--text-2); }
+
+        @media (max-width: 760px) {
+            .value-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ─── SUPPORT ─────────────────────────────────────────── */
+        .support {
+            background: rgba(17,21,34,0.4);
+            border-top: 1px solid var(--border-dim);
+            border-bottom: 1px solid var(--border-dim);
+        }
+
+        .support-card {
+            max-width: 720px; margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            padding: 4rem 3rem;
+            text-align: center;
+        }
+
+        .support-card h2 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .support-card > p {
+            color: var(--text-2);
+            font-size: 1.05rem;
+            max-width: 520px; margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+
+        .email-chip {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            padding: 0.85rem 1.75rem;
+            background: rgba(214,168,79,0.08);
+            border: 1px solid rgba(214,168,79,0.25);
+            border-radius: 12px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 2.5rem;
+            transition: all 0.25s;
+        }
+        .email-chip:hover {
+            background: rgba(214,168,79,0.14);
+            color: var(--gold-bright);
+        }
+
+        .support-links {
+            display: flex; justify-content: center;
+            gap: 2rem; flex-wrap: wrap;
+        }
+        .support-links a {
+            font-size: 0.9rem; color: var(--text-2);
+            padding-bottom: 2px;
+            border-bottom: 1px solid rgba(168,173,189,0.3);
+            transition: all 0.2s;
+        }
+        .support-links a:hover {
+            color: var(--text);
+            border-color: var(--text-2);
+        }
+
+        .support-note {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-3);
+        }
+
+        /* ─── FOOTER ──────────────────────────────────────────── */
+        footer {
+            padding: 3rem 0;
+            border-top: 1px solid var(--border-dim);
+        }
+
+        .footer-inner {
+            display: flex; align-items: center;
+            justify-content: space-between; flex-wrap: wrap; gap: 1.5rem;
+        }
+
+        .footer-logo {
+            display: flex; align-items: center; gap: 0.5rem;
+            font-size: 1.1rem; font-weight: 700; letter-spacing: 0.5px;
+            background: linear-gradient(120deg, var(--text-2), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-logo img {
+            width: 24px; height: 24px; border-radius: 6px;
+            flex-shrink: 0;
+            -webkit-text-fill-color: initial;
+        }
+
+        .footer-links { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-3); font-size: 0.85rem; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--text-2); }
+
+        .copyright { color: var(--text-3); font-size: 0.8rem; }
+
+        /* ─── DIVIDER ─────────────────────────────────────────── */
+        .section-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border), transparent);
+            margin: 0 2rem;
+        }
+
+        /* ─── RESPONSIVE ──────────────────────────────────────── */
+        @media (max-width: 960px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-text { display: flex; flex-direction: column; align-items: center; }
+            .hero-phone { order: -1; display: flex; justify-content: center; }
+            .hero h1 { font-size: clamp(2.4rem, 7vw, 3.5rem); }
+            .hero p { margin-left: auto; margin-right: auto; }
+            .card-grid { grid-template-columns: 1fr; }
+            .feature-grid { grid-template-columns: repeat(2, 1fr); }
+            .arc-rings svg { left: 50%; opacity: 0.04; }
+        }
+
+        @media (max-width: 640px) {
+            nav { display: none; }
+            .hero { padding: 8rem 0 5rem; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .tier-path { gap: 0; }
+            .tier-orb { width: 52px; height: 52px; }
+            .tier-orb svg { width: 24px; height: 24px; }
+            .tier-exp { display: none; }
+            .support-card { padding: 2.5rem 1.5rem; }
+            .email-chip { font-size: 1rem; padding: 0.7rem 1.2rem; }
+            .footer-inner { flex-direction: column; align-items: center; text-align: center; }
+            .iphone { width: 230px; height: 476px; }
+        }
+
+        @keyframes fade-up {
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container nav-inner">
+        <div class="logo">
+            <img src="ArcRiseIcon.icon/Assets/arcRise.png" alt="" class="logo-icon" aria-hidden="true">
+            ArcRise
+        </div>
+        <nav aria-label="Site navigation">
+            <a href="#progression">Tiers</a>
+            <a href="#features">Features</a>
+            <a href="#support">Support</a>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <!-- ═══ HERO ═══ -->
+    <section class="hero" aria-label="Hero">
+        <div class="arc-rings" aria-hidden="true">
+            <svg viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="450" cy="450" r="150" stroke="#D6A84F" stroke-width="1"/>
+                <circle cx="450" cy="450" r="220" stroke="#D6A84F" stroke-width="0.8"/>
+                <circle cx="450" cy="450" r="310" stroke="#8FB7FF" stroke-width="0.6"/>
+                <circle cx="450" cy="450" r="400" stroke="#D6A84F" stroke-width="0.5"/>
+                <circle cx="450" cy="450" r="440" stroke="#D6A84F" stroke-width="0.4"/>
+                <line x1="450" y1="10" x2="450" y2="890" stroke="#D6A84F" stroke-width="0.3" stroke-dasharray="4 12"/>
+                <line x1="10" y1="450" x2="890" y2="450" stroke="#D6A84F" stroke-width="0.3" stroke-dasharray="4 12"/>
+            </svg>
+        </div>
+
+        <div class="container hero-inner">
+            <div class="hero-text">
+                <img src="ArcRiseIcon.icon/Assets/arcRise.png" alt="ArcRise app icon" class="hero-app-icon">
+                <div class="hero-eyebrow">Now Available on iOS</div>
+                <h1>Rise Through<br>Your Arcs</h1>
+                <p>Turn habits into a hero's journey. Build discipline, earn EXP, ascend tiers, and become the person you were meant to be.</p>
+                <div class="hero-ctas">
+                    <a href="#" class="appstore-btn" aria-label="Download ArcRise on the App Store">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                        <div class="appstore-btn-label">
+                            <small>Download on the</small>
+                            <strong>App Store</strong>
+                        </div>
+                    </a>
+                    <a href="#support" class="btn btn-ghost">Contact Support</a>
+                </div>
+            </div>
+
+            <div class="hero-phone">
+                <div class="phone-wrap">
+                    <div class="phone-glow" aria-hidden="true"></div>
+                    <div class="iphone" role="img" aria-label="ArcRise app showing today's quest dashboard">
+                        <div class="iphone-vol" aria-hidden="true"></div>
+                        <div class="iphone-screen">
+                            <img src="app_screenshots/Quests.png" alt="ArcRise Today's Quests screen" class="iphone-screenshot" id="heroShot">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ TIER PROGRESSION ═══ -->
+    <section id="progression" class="progression" aria-label="Hero tier progression">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">Your Journey</div>
+                <h2>Five Tiers of Mastery</h2>
+                <p>There are five tiers between Novice and Master. Each one takes real effort to reach — the kind you can't fake or fast-track.</p>
+            </div>
+
+            <div class="tier-path reveal" id="tierPath" aria-label="Tier progression: Novice, Apprentice, Adept, Expert, Master">
+                <div class="tier-node" data-tier="0">
+                    <div class="tier-orb" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                            <g transform="rotate(28,16,16)">
+                                <path d="M16 3.52 C24.32 7.99 24.32 21.49 16 28.48 C7.68 21.49 7.68 7.99 16 3.52Z"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="tier-name">Novice</div>
+                    <div class="tier-exp">Lv 1–5</div>
+                </div>
+                <div class="tier-node" data-tier="1">
+                    <div class="tier-orb" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                            <path d="M14.72 30 Q12.2 17.3 17.28 7.04" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+                            <path d="M14.5 22 C6.5 20 4.5 12.5 9.5 11 C11.8 10.3 14.8 16.5 14.5 22Z"/>
+                            <path d="M17 17.5 C25 15.5 27 8 22 6.5 C19.5 5.8 16.8 12 17 17.5Z"/>
+                            <path d="M15.8 12 C13 6.5 13.8 2.5 16 2 C18.2 2.5 19 6.5 15.8 12Z"/>
+                        </svg>
+                    </div>
+                    <div class="tier-name">Apprentice</div>
+                    <div class="tier-exp">Lv 6–15</div>
+                </div>
+                <div class="tier-node" data-tier="2">
+                    <div class="tier-orb" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                            <path d="M2 27 L11 8 L20 27Z" opacity="0.5"/>
+                            <path d="M10 27 L21 5 L32 27Z"/>
+                        </svg>
+                    </div>
+                    <div class="tier-name">Adept</div>
+                    <div class="tier-exp">Lv 16–30</div>
+                </div>
+                <div class="tier-node" data-tier="3">
+                    <div class="tier-orb" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                            <circle cx="16" cy="16" r="5.5"/>
+                            <rect x="14.75" y="1.5" width="2.5" height="5.5" rx="1.25"/>
+                            <rect x="14.75" y="25" width="2.5" height="5.5" rx="1.25"/>
+                            <rect x="1.5" y="14.75" width="5.5" height="2.5" rx="1.25"/>
+                            <rect x="25" y="14.75" width="5.5" height="2.5" rx="1.25"/>
+                            <g transform="rotate(45,16,16)">
+                                <rect x="14.75" y="1.5" width="2.5" height="5.5" rx="1.25"/>
+                                <rect x="14.75" y="25" width="2.5" height="5.5" rx="1.25"/>
+                                <rect x="1.5" y="14.75" width="5.5" height="2.5" rx="1.25"/>
+                                <rect x="25" y="14.75" width="5.5" height="2.5" rx="1.25"/>
+                            </g>
+                        </svg>
+                    </div>
+                    <div class="tier-name">Expert</div>
+                    <div class="tier-exp">Lv 31–50</div>
+                </div>
+                <div class="tier-node" data-tier="4">
+                    <div class="tier-orb" aria-hidden="true">
+                        <svg width="32" height="32" viewBox="-5 -5 42 42" fill="currentColor">
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(0,16,16)"   opacity="0.86"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(30,16,16)"  opacity="0.48"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(60,16,16)"  opacity="0.86"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(90,16,16)"  opacity="0.48"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(120,16,16)" opacity="0.86"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(150,16,16)" opacity="0.48"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(180,16,16)" opacity="0.86"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(210,16,16)" opacity="0.48"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(240,16,16)" opacity="0.86"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(270,16,16)" opacity="0.48"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(300,16,16)" opacity="0.86"/>
+                            <rect x="14.88" y="-2.88" width="2.24" height="13.44" rx="1.12" transform="rotate(330,16,16)" opacity="0.48"/>
+                            <path d="M29.44 16 L16 29.44 L2.56 16 L16 2.56Z"/>
+                        </svg>
+                    </div>
+                    <div class="tier-name">Master</div>
+                    <div class="tier-exp">Lv 51+</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══ SCREENSHOT GALLERY ═══ -->
+    <div class="gallery container" aria-label="App screenshots">
+        <div class="section-header reveal">
+            <div class="section-label">See it in action</div>
+            <h2>Every Screen, Crafted</h2>
+            <p>From your daily arc list to your lifetime achievement shelf — a consistent, premium experience throughout.</p>
+        </div>
+
+        <div class="gallery-track-wrap">
+            <div class="gallery-track" role="list">
+                <div class="gallery-item" role="listitem" style="transition-delay:0s">
+                    <div class="mini-phone">
+                        <div class="mini-phone-screen">
+                            <img src="app_screenshots/Quests.png" alt="Today's Quests — your daily arc list with EXP progress">
+                        </div>
+                    </div>
+                    <div class="gallery-label">Today's Quests</div>
+                </div>
+                <div class="gallery-item" role="listitem" style="transition-delay:0.1s">
+                    <div class="mini-phone">
+                        <div class="mini-phone-screen">
+                            <img src="app_screenshots/History.png" alt="History — arc streaks and completion over time">
+                        </div>
+                    </div>
+                    <div class="gallery-label">History</div>
+                </div>
+                <div class="gallery-item" role="listitem" style="transition-delay:0.2s">
+                    <div class="mini-phone">
+                        <div class="mini-phone-screen">
+                            <img src="app_screenshots/Journey.png" alt="Journey — arc journey and milestones">
+                        </div>
+                    </div>
+                    <div class="gallery-label">Journey</div>
+                </div>
+                <div class="gallery-item" role="listitem" style="transition-delay:0.3s">
+                    <div class="mini-phone">
+                        <div class="mini-phone-screen">
+                            <img src="app_screenshots/award_detail.png" alt="Award detail — achievement earned in ArcRise">
+                        </div>
+                    </div>
+                    <div class="gallery-label">Awards</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══ PHILOSOPHY ═══ -->
+    <section aria-label="Philosophy">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">The ArcRise Way</div>
+                <h2>Your Habits Are Chapters, Not Chores</h2>
+                <p>ArcRise treats every habit as an arc in your story. Each Clear earns EXP. Each streak builds momentum. Each level brings you closer to mastery.</p>
+            </div>
+
+            <div class="card-grid">
+                <div class="card reveal">
+                    <div class="card-icon-wrap">
+                        <!-- Arc progress icon: 270° circle with a start-point dot -->
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 4A8 8 0 1 1 4 12" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"/>
+                            <circle cx="12" cy="4" r="2.4" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <h3>Track Habits as Arcs</h3>
+                    <p>Stop logging tasks. Start writing arcs. Set clear daily, weekly, or monthly goals that mean something, then complete them.</p>
+                </div>
+                <div class="card reveal" style="transition-delay:0.08s">
+                    <div class="card-icon-wrap">
+                        <!-- Lightning bolt icon -->
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M13 3L5 13.5H12L10 21L19 10.5H12L13 3Z" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <h3>Earn EXP &amp; Level Up</h3>
+                    <p>Every Clear you earn feeds into a calibrated EXP system. Watch effort compound — discipline becomes visible progress.</p>
+                </div>
+                <div class="card reveal" style="transition-delay:0.16s">
+                    <div class="card-icon-wrap">
+                        <!-- Ascending tier bars icon -->
+                        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <rect x="3" y="14" width="4.5" height="7" rx="1.25" stroke="currentColor" stroke-width="1.9"/>
+                            <rect x="9.75" y="8.5" width="4.5" height="12.5" rx="1.25" stroke="currentColor" stroke-width="1.9"/>
+                            <rect x="16.5" y="3" width="4.5" height="18" rx="1.25" stroke="currentColor" stroke-width="1.9"/>
+                        </svg>
+                    </div>
+                    <h3>Ascend Tiers &amp; Build Legacy</h3>
+                    <p>Rise from Novice to Master. Each tier is proof of consistency, not luck. Your arc history is the legacy you're building.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══ FEATURES ═══ -->
+    <section id="features" class="features-bg" aria-label="Features">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">Features</div>
+                <h2>Forged for Focus</h2>
+                <p>Everything you need to build lasting habits — nothing you don't.</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item reveal">
+                    <div class="feature-dot"></div>
+                    <div>
+                        <h4>Habit Arcs</h4>
+                        <p>Daily, weekly, and monthly arcs with flexible goals. Customise difficulty and let EXP rewards scale accordingly.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal" style="transition-delay:0.05s">
+                    <div class="feature-dot" style="background:var(--dawn)"></div>
+                    <div>
+                        <h4>EXP Progression</h4>
+                        <p>Harder habits pay more EXP, simpler ones pay less. Pick the difficulty honestly and the numbers will reflect it.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal" style="transition-delay:0.10s">
+                    <div class="feature-dot" style="background:var(--blue)"></div>
+                    <div>
+                        <h4>Hero Tiers</h4>
+                        <p>Novice through Master — five tiers that open when your EXP hits the threshold. You can't buy your way up and you can't skip ahead.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal" style="transition-delay:0.15s">
+                    <div class="feature-dot" style="background:var(--mint)"></div>
+                    <div>
+                        <h4>Streak Momentum</h4>
+                        <p>Streaks built to motivate. Hero Streak multipliers stack your EXP gains the longer you stay consistent.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal" style="transition-delay:0.20s">
+                    <div class="feature-dot"></div>
+                    <div>
+                        <h4>Home Screen Widgets</h4>
+                        <p>Six widget types — from a quick Clear counter to an interactive arc list. Your progress always visible, always motivating.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal" style="transition-delay:0.25s">
+                    <div class="feature-dot" style="background:var(--dawn)"></div>
+                    <div>
+                        <h4>Arc Journeys</h4>
+                        <p>A lifetime history view for every arc you've ever run. See when you started, when you broke through, where you stand.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal" style="transition-delay:0.30s">
+                    <div class="feature-dot" style="background:var(--blue)"></div>
+                    <div>
+                        <h4>Smart Reminders</h4>
+                        <p>Per-arc reminders that learn your best time. Set it once, and ArcRise finds the moment you're most likely to follow through.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal" style="transition-delay:0.35s">
+                    <div class="feature-dot" style="background:var(--mint)"></div>
+                    <div>
+                        <h4>Achievement Awards</h4>
+                        <p>Earn milestone awards across streaks, mastery, and Clears. A living shelf that reflects the person you're becoming.</p>
+                    </div>
+                </div>
+                <div class="feature-item reveal" style="transition-delay:0.40s">
+                    <div class="feature-dot"></div>
+                    <div>
+                        <h4>HealthKit Sync</h4>
+                        <p>Link arcs to your steps, sleep, and workouts. ArcRise reads from Health and marks your arc cleared automatically.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- ═══ PRIVACY + PRICING ═══ -->
+    <section aria-label="Privacy and pricing">
+        <div class="container">
+            <div class="section-header reveal">
+                <div class="section-label">Transparent by Design</div>
+                <h2>Free to Use. Private by Default.</h2>
+                <p>No account. No cloud. No subscription. Your data lives on your device alone — and upgrading Pro is a single one-time payment.</p>
+            </div>
+
+            <div class="value-grid">
+
+                <div class="value-card privacy reveal">
+                    <div class="value-eyebrow">Privacy</div>
+                    <h3>Your data never leaves your device</h3>
+                    <p>ArcRise is fully local. Every arc, every log, every streak is stored privately on your phone. No server. No account. No analytics.</p>
+                    <div class="privacy-list">
+                        <div class="privacy-row">
+                            <div class="privacy-icon">
+                                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                    <path d="M10 2L17 5V10C17 14.5 13.5 17.5 10 18.5C6.5 17.5 3 14.5 3 10V5L10 2Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="privacy-row-text">
+                                <strong>No account required</strong>
+                                <span>Open the app and start. Nothing to sign up for, ever.</span>
+                            </div>
+                        </div>
+                        <div class="privacy-row">
+                            <div class="privacy-icon">
+                                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                    <rect x="4" y="9" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.6"/>
+                                    <path d="M7 9V6.5a3 3 0 0 1 6 0V9" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                                </svg>
+                            </div>
+                            <div class="privacy-row-text">
+                                <strong>Stored on-device only</strong>
+                                <span>Your arc logs, EXP history, and streaks never touch a server.</span>
+                            </div>
+                        </div>
+                        <div class="privacy-row">
+                            <div class="privacy-icon">
+                                <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                                    <circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.6"/>
+                                    <path d="M10 6.5V11L13 12.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                            <div class="privacy-row-text">
+                                <strong>App Store privacy label: Data Not Collected</strong>
+                                <span>Verified and declared in App Store Connect.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="value-card pro reveal" style="transition-delay:0.14s">
+                    <div class="value-eyebrow">ArcRise Pro</div>
+                    <h3>One payment.<br>Everything, forever.</h3>
+                    <p>No subscription. No lock-in. Pay once and unlock all Pro features for life — including every future Pro addition.</p>
+                    <ul class="pro-list">
+                        <li>All 6 home screen widgets</li>
+                        <li>Data backup — export &amp; import your full arc history</li>
+                        <li>HealthKit auto-sync (steps, sleep, workouts &amp; more)</li>
+                        <li>Smart reminders per arc — learns your best time</li>
+                    </ul>
+                    <div class="price-pill">
+                        <strong>One-time purchase</strong>
+                        <span>— no recurring fees, ever</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ SUPPORT ═══ -->
+    <section id="support" class="support" aria-label="Support">
+        <div class="container">
+            <div class="support-card reveal">
+                <div class="section-label" style="display:block;margin-bottom:1rem">Support</div>
+                <h2>We're Here to Help</h2>
+                <p>Need help with ArcRise, want to report an issue, or have a feature request? Reach out — we read every message and respond promptly.</p>
+
+                <a href="mailto:support@arcrise.app" class="email-chip" aria-label="Email support at support@arcrise.app">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                    support@arcrise.app
+                </a>
+
+                <div class="support-links">
+                    <a href="mailto:support@arcrise.app?subject=ArcRise%20Feedback">App Feedback</a>
+                    <a href="mailto:support@arcrise.app?subject=Feature%20Request">Feature Request</a>
+                    <a href="mailto:support@arcrise.app?subject=Bug%20Report">Report an Issue</a>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Use</a>
+                </div>
+
+                <p class="support-note">We typically respond within 1–2 business days.</p>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div class="container footer-inner">
+        <div class="footer-logo">
+            <img src="ArcRiseIcon.icon/Assets/arcRise.png" alt="" aria-hidden="true">
+            ArcRise
+        </div>
+        <div class="footer-links">
+            <a href="#support">Support</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+        </div>
+        <div class="copyright">&copy; 2026 ArcRise. All rights reserved.</div>
+    </div>
+</footer>
+
+<script>
+(function () {
+    'use strict';
+
+    // Scroll-reveal
+    const revealEls = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('active');
+            obs.unobserve(e.target);
+        });
+    }, { threshold: 0.04, rootMargin: '0px 0px -10px 0px' });
+    revealEls.forEach(el => revealObs.observe(el));
+
+    // Gallery scroll-reveal
+    const galleryItems = document.querySelectorAll('.gallery-item');
+    const galleryObs = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            e.target.classList.add('active');
+            obs.unobserve(e.target);
+        });
+    }, { threshold: 0.04, rootMargin: '0px 0px -10px 0px' });
+    galleryItems.forEach(el => galleryObs.observe(el));
+
+    // Tier progression — light up sequentially on enter
+    const tierPath = document.getElementById('tierPath');
+    if (tierPath) {
+        const nodes = Array.from(tierPath.querySelectorAll('.tier-node'));
+        let animated = false;
+
+        const tierObs = new IntersectionObserver(entries => {
+            if (!entries[0].isIntersecting || animated) return;
+            animated = true;
+            tierObs.disconnect();
+
+            const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduced) {
+                nodes.forEach(n => n.classList.add('lit'));
+                return;
+            }
+
+            // Progressive reveal: each tier lights up and stays lit,
+            // staggered with slight acceleration toward master.
+            const delays = [0, 320, 600, 840, 1040];
+            nodes.forEach((node, i) => {
+                setTimeout(() => { node.classList.add('lit'); }, delays[i]);
+            });
+        }, { threshold: 0.25 });
+
+        tierObs.observe(tierPath);
+    }
+
+    // Hero screenshot cycle
+    const heroShot = document.getElementById('heroShot');
+    const shots = [
+        'app_screenshots/Quests.png',
+        'app_screenshots/History.png',
+        'app_screenshots/Journey.png',
+        'app_screenshots/Awards.png',
+    ];
+    const shotAlts = [
+        "ArcRise Today's Quests screen",
+        "ArcRise History screen showing arc streaks",
+        "ArcRise Journey screen showing arc progress",
+        "ArcRise Awards screen showing achievements",
+    ];
+    if (heroShot) {
+        let idx = 0;
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduced) {
+            setInterval(() => {
+                idx = (idx + 1) % shots.length;
+                heroShot.style.opacity = '0';
+                setTimeout(() => {
+                    heroShot.src = shots[idx];
+                    heroShot.alt = shotAlts[idx];
+                    heroShot.style.opacity = '1';
+                }, 500);
+            }, 4000);
+        }
+    }
+    // Active nav section tracking
+    const navLinks = document.querySelectorAll('nav a[href^="#"]');
+    const sectionObs = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (!e.isIntersecting) return;
+            const link = document.querySelector(`nav a[href="#${e.target.id}"]`);
+            if (!link) return;
+            navLinks.forEach(l => l.classList.remove('nav-active'));
+            link.classList.add('nav-active');
+        });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    document.querySelectorAll('section[id]').forEach(s => sectionObs.observe(s));
+
+})();
+</script>
+
+</body>
+</html>
